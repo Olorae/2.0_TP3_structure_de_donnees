@@ -19,7 +19,7 @@ public:
     // Fonctions
 
     // Constructeur / Destructeur
-    explicit ABR(noeud* racine);
+    ABR(noeud* racine);
     ~ABR();
 
     void supprimeTout(noeud* racine);

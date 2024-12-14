@@ -28,7 +28,7 @@ void ABR::supprimeTout(noeud* racine)
 
 void ABR::Inserer(noeud* racine, int d)
 {
-    noeud* noeudTemp = nullptr;
+    noeud* noeudTemp = new noeud();
     noeudTemp->valeur = d;
 
     if (racine)
@@ -47,13 +47,17 @@ void ABR::Inserer(noeud* racine, int d)
         }
         else
         {
-            if (d < racine->valeur)
+            if (d > racine->valeur)
             {
                 if (racine->droit)
                 {
                     Inserer(racine->droit, d);
                 }
-                racine->droit = noeudTemp;
+                if (!racine->droit)
+                {
+                    cout << d << " Ajoute \n";
+                    racine->droit = noeudTemp;
+                }
             }
         }
     }
@@ -61,8 +65,6 @@ void ABR::Inserer(noeud* racine, int d)
 
 void ABR::Supprimer(noeud* racine, int d)
 {
-    noeud* noeudTemp = nullptr;
-    noeudTemp->valeur = d;
 
     if (racine)
     {
@@ -75,11 +77,13 @@ void ABR::Supprimer(noeud* racine, int d)
         }
         else if (d == racine->valeur)
         {
+            cout << d << " supprime \n";
+
             delete racine;
         }
         else
         {
-            if (d < racine->valeur)
+            if (d > racine->valeur)
             {
                 if (racine->droit)
                 {
