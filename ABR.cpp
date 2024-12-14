@@ -165,7 +165,7 @@ void ABR::Afficher_Arbre(noeud* racine)
 
 int ABR::Afficher_hauteur(noeud* racine)
 {
-    if (racine)
+    if (!racine)
         return 0;
 
     int left = Afficher_hauteur(racine->gauche);

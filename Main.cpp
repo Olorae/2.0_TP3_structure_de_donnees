@@ -48,10 +48,10 @@ int main()
     ABR* arbre = new ABR(racine);
 
     arbre->Afficher_Arbre(racine);
+    cout << "Hauteur = " << arbre->Afficher_hauteur(racine) << endl;
     arbre->Archiver(racine);
     arbre->Inserer(racine, 8);
     arbre->Afficher_Arbre(racine);
-    arbre->Archiver(racine);
     arbre->Supprimer(racine, 8);
     arbre->supprimeTout(racine);
 
