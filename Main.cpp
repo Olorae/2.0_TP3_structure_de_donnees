@@ -53,7 +53,10 @@ int main()
     arbre->Inserer(racine, 8);
     arbre->Afficher_Arbre(racine);
     arbre->Supprimer(racine, 8);
+    arbre->Afficher_Arbre(racine);
     arbre->supprimeTout(racine);
+    arbre->Afficher_Arbre(racine);
+
 
     return 0;
 }

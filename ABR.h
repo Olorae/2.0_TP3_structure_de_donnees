@@ -25,8 +25,10 @@ public:
     void supprimeTout(noeud* racine);
 
     void Inserer(noeud* racine, int d);
+    
+    noeud* trouverMin(noeud* racine);
 
-    void Supprimer(noeud* racine, int d);
+    void Supprimer(noeud* &racine, int d);
 
     void Afficher_Arbre(noeud* racine);
 

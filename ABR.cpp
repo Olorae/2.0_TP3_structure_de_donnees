@@ -29,6 +29,7 @@ void ABR::supprimeTout(noeud* racine)
 void ABR::Inserer(noeud* racine, int d)
 {
     noeud* noeudTemp = new noeud();
+    
     noeudTemp->valeur = d;
 
     if (racine)
@@ -63,73 +64,75 @@ void ABR::Inserer(noeud* racine, int d)
     }
 }
 
-void ABR::Supprimer(noeud* racine, int d)
+void ABR::Supprimer(noeud* &racine, int d)
 {
+    if (racine == nullptr)
+        return;
 
-    if (racine)
+    // Si la valeur à supprimer est plus petite, on va dans le sous-arbre gauche
+    if (d < racine->valeur)
     {
-        if (d < racine->valeur)
-        {
-            if (racine->gauche)
-            {
-                Supprimer(racine->gauche, d);
-            }
-        }
-        else if (d == racine->valeur)
-        {
-            cout << d << " supprime \n";
+        Supprimer(racine->gauche, d);
+    }
+    // Si la valeur à supprimer est plus grande, on va dans le sous-arbre droit
+    else if (d > racine->valeur)
+    {
+        Supprimer(racine->droit, d);
+    }
+    else
+    {
+        // Si on trouve le nœud à supprimer
+        cout << d << " supprime \n";
 
+        // Si c'est une feuille
+        if (racine->gauche == nullptr && racine->droit == nullptr)
+        {
             delete racine;
+            racine = nullptr; 
+        }
+        // si une seul fils n'est pas null
+        else if (racine->gauche == nullptr || racine->droit == nullptr)
+        {
+            noeud* temp = racine;
+            if (racine->gauche != nullptr)
+                racine = racine->gauche; 
+            else
+                racine = racine->droit;  
+            delete temp;  
         }
         else
         {
-            if (d > racine->valeur)
-            {
-                if (racine->droit)
-                {
-                    Supprimer(racine->droit, d);
-                }
-            }
+            // Trouver le successeur immédiat 
+            noeud* temp = trouverMin(racine->droit);
+            racine->valeur = temp->valeur;  
+            Supprimer(racine->droit, temp->valeur);  
         }
     }
 }
 
+// Fonction pour trouver le minimum (le plus à gauche) d'un sous-arbre
+noeud* ABR::trouverMin(noeud* racine)
+{
+    while (racine && racine->gauche != nullptr)
+        racine = racine->gauche;
+    return racine;
+}
 /*
  * Affiche les éléments de l’arbre niveau par niveau (un niveau étant affiché sur une seule ligne). Un bonus de 5pts est donné à ceux et celles qui commencent par le dernier niveau (dernier
  * niveau étant le niveau n’ayant pas de descendants, c’est-à-dire les nœuds feuilles), puis l’avant dernier niveau, et ainsi de suite jusqu’à arriver au premier niveau qui est la racine
  */
+
 // prenant pour acquis que l'arbre est équilibré
 static stack<noeud> noeuds;
-
 void ABR::Afficher_Arbre(noeud* racine)
 {
-    /*
-        if(racine){
-            
-            if (racine->gauche)
-            {
-                noeuds.push(*racine);
-                Afficher_Arbre(racine->gauche);
-            }
-            if (racine->droit)
-            {
-                noeuds.push(*racine);
-                Afficher_Arbre(racine->droit);
-            }
-            
-            if (!racine->gauche && !racine->droit)
-            {
-                noeuds.push(*racine);
-                //Supprimer(racine, racine->valeur);
-            }
-        }
-    
-        */
-
-    if (!racine) return;
+    if (racine->valeur == -572662307){ // Valeur qui est mis sur la racine lorsque elle est effacé
+        cout<< "Arbre Vide" << endl;
+        return;
+    }
 
     queue<noeud*> file;
-    stack<vector<int>> levels;
+    stack<vector<int>> niveau;
     file.push(racine);
 
     // Parcourir niveau par niveau
@@ -147,14 +150,15 @@ void ABR::Afficher_Arbre(noeud* racine)
             if (currentNode->gauche) file.push(currentNode->gauche);
             if (currentNode->droit) file.push(currentNode->droit);
         }
-        levels.push(currentNiveau);
+        niveau.push(currentNiveau);
     }
 
     // Afficher les niveaux dans l'ordre inverse
-    while (!levels.empty())
+    
+    while (!niveau.empty())
     {
-        vector<int> level = levels.top();
-        levels.pop();
+        vector<int> level = niveau.top();
+        niveau.pop();
         for (int value : level)
         {
             cout << value << " ";
@@ -173,8 +177,7 @@ int ABR::Afficher_hauteur(noeud* racine)
 
     return ((left > right ? left : right) + 1);
 }
-
-// Affiche le nombre de nœuds dont la valeur absolue de la différence de hauteurs de leurs sous-arbres gauche et droit est supérieure strictement à 1. (bonus 5pts)
+// Pas besoins c'est un bonus 
 int ABR::Desequilibre(noeud* racine)
 {
     if (racine)
@@ -183,6 +186,7 @@ int ABR::Desequilibre(noeud* racine)
     return 1;
 }
 
+// Pas besoins c'est un bonus 
 void ABR::Afficher_Ascendant(noeud* racine, int d)
 {
 }
