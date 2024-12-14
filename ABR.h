@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 
 using namespace std;
 
@@ -18,7 +19,7 @@ public:
     // Fonctions
 
     // Constructeur / Destructeur
-    ABR(noeud* racine);
+    explicit ABR(noeud* racine);
     ~ABR();
 
     void supprimeTout(noeud* racine);
@@ -35,5 +36,6 @@ public:
 
     void Afficher_Ascendant(noeud* racine, int d);
 
+    void ArchiverRec(noeud* noeud, ofstream& ofstream);
     void Archiver(noeud* racine);
 };
