@@ -20,6 +20,7 @@ public:
 
     // Constructeur / Destructeur
     ABR(noeud* racine);
+    ABR();
     ~ABR();
 
     void supprimeTout(noeud* racine);
@@ -40,4 +41,7 @@ public:
 
     void ArchiverRec(noeud* noeud, ofstream& ofstream);
     void Archiver(noeud* racine);
+
+    void setRacine(noeud* racine);
+    noeud* getRacine();
 };

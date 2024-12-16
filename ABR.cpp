@@ -7,7 +7,11 @@
 
 using namespace std;
 
-ABR::ABR::ABR(noeud* racine) : Racine(racine)
+ABR::ABR(noeud* racine) : Racine(racine)
+{
+}
+
+ABR::ABR() : Racine(nullptr)
 {
 }
 
@@ -44,7 +48,7 @@ void ABR::Inserer(noeud* racine, int d)
         }
         else if (d == racine->valeur)
         {
-            cout << d << " existe deja \n";
+            cout << "La valeur \"" << d << "\" existe deja \n";
         }
         else
         {
@@ -56,7 +60,7 @@ void ABR::Inserer(noeud* racine, int d)
                 }
                 if (!racine->droit)
                 {
-                    cout << d << " Ajoute \n";
+                    cout << "La valur \"" << d << "\" a ete ajoute \n";
                     racine->droit = noeudTemp;
                 }
             }
@@ -82,7 +86,7 @@ void ABR::Supprimer(noeud* &racine, int d)
     else
     {
         // Si on trouve le nœud à supprimer
-        cout << d << " supprime \n";
+        cout << "La valeur \"" << d << "\" a ete supprime \n";
 
         // Si c'est une feuille
         if (racine->gauche == nullptr && racine->droit == nullptr)
@@ -127,7 +131,7 @@ static stack<noeud> noeuds;
 void ABR::Afficher_Arbre(noeud* racine)
 {
     if (racine->valeur == -572662307){ // Valeur qui est mis sur la racine lorsque elle est effacé
-        cout<< "Arbre Vide" << endl;
+        cout<< "Erreur : Impossible d'afficher un arbre Vide" << endl;
         return;
     }
 
@@ -221,4 +225,14 @@ void ABR::Archiver(noeud* racine)
     ArchiverRec(racine, outFile);
     outFile.close();
     cout << "Arbre archive dans 'archive.txt'.\n";
+}
+
+noeud* ABR::getRacine()
+{
+    return Racine;
+}
+
+void ABR::setRacine(noeud* racine)
+{
+    Racine = racine;
 }
